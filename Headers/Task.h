@@ -1,6 +1,7 @@
 #include "../util/String.h"
-#include"./Date.h"
+#include "./Date.h"
 #include <iomanip>
+#include<fstream>
 
 enum class Status { ON_HOLD, IN_PROCESS, DONE, OVERDUE };
 
@@ -17,7 +18,17 @@ private:
 public:
   Task() {}
   Task(const char *name, const char *due_date, const char *description);
-  void list_task(const unsigned id) const;
-  void list_task(const char *name) const;
-  void list_task_date(const char *date) const;
+  void list_task() const;
+
+  const unsigned getID() const;
+  const Date &getDate() const;
+  const MyString &getName() const;
+  const Status getStatus() const;
+
+  void setName(const char *newName);
+  void setStatus(const Status newStatus);
+  void setDesc(const char* newDesc);
+
+  void writeToFile(std::ofstream &out) const;
+  void readFromFile(std::ifstream &in);
 };

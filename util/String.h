@@ -9,7 +9,7 @@ class MyString {
   void free();
 
   explicit MyString(
-      size_t capacity); // for memory allocation. How much bytes to allocate
+      size_t capacity);
 public:
   MyString();
   MyString(const char *data);

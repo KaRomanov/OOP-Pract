@@ -1,5 +1,5 @@
 #include <cstddef>
-#include <exception>
+#include <stdexcept>
 #include <utility>
 
 // NOTE!: most of the functions are not needed in the class
@@ -90,7 +90,7 @@ template <typename T> Vector<T>::~Vector() { free(); }
 
 template <typename T> void Vector<T>::assertIndex(size_t index) const {
   if (index >= size) {
-    throw std::exception("Out of range");
+    throw std::runtime_error("Out of range");
   }
 }
 
@@ -163,7 +163,7 @@ template <typename T> void Vector<T>::pushAt(T &&element, size_t index) {
 
 template <typename T> T Vector<T>::popBack() {
   if (empty()) {
-    throw std::exception("Vector is empty");
+    throw std::runtime_error("Vector is empty");
   }
   // Note: the actual std::vector does NOT lower its capacity on this function
   // downsizeIfNeeded();
