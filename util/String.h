@@ -1,37 +1,38 @@
 #pragma once
 #include <iostream>
 
-class MyString {
-  char *_data;
-  size_t _length;
+class MyString
+{
+    char *_data;
+    size_t _length;
 
-  void copyFrom(const MyString &data);
-  void free();
+    void copyFrom(const MyString &data);
+    void free();
 
-  explicit MyString(
-      size_t capacity);
-public:
-  MyString();
-  MyString(const char *data);
-  MyString(const MyString &other);
-  MyString &operator=(const MyString &other);
-  ~MyString();
+    explicit MyString(size_t capacity);
 
-  MyString(MyString &&other);
-  MyString &operator=(MyString &&other);
+  public:
+    MyString();
+    MyString(const char *data);
+    MyString(const MyString &other);
+    MyString &operator=(const MyString &other);
+    ~MyString();
 
-  size_t length() const;
-  MyString &operator+=(const MyString &other);
+    MyString(MyString &&other);
+    MyString &operator=(MyString &&other);
 
-  MyString substr(size_t begin, size_t howMany) const;
+    size_t length() const;
+    MyString &operator+=(const MyString &other);
 
-  char &operator[](size_t index);
-  char operator[](size_t index) const;
+    MyString substr(size_t begin, size_t howMany) const;
 
-  const char *c_str() const;
+    char &operator[](size_t index);
+    char operator[](size_t index) const;
 
-  friend MyString operator+(const MyString &lhs, const MyString &rhs);
-  friend std::istream &operator>>(std::istream &is, MyString &str);
+    const char *c_str() const;
+
+    friend MyString operator+(const MyString &lhs, const MyString &rhs);
+    friend std::istream &operator>>(std::istream &is, MyString &str);
 };
 
 std::ostream &operator<<(std::ostream &os, const MyString &str);
