@@ -16,6 +16,7 @@ class Date
     {
     }
     Date(const MyString &input);
+    Date(long unixTime);
 
     void print() const;
     void updateCurrentTime();

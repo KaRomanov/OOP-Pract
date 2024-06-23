@@ -47,14 +47,7 @@ time_t Date::getUnixTime() const
     return time;
 }
 
-std::ostream &operator<<(std::ostream &os, const Date &date)
+Date::Date(long unixTime)
 {
-    os << date.time;
-    return os;
-}
-
-std::istream &operator>>(std::istream &is, Date &date)
-{
-    is >> date.time;
-    return is;
+    time = unixTime;
 }

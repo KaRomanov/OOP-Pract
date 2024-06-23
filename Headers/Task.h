@@ -1,3 +1,4 @@
+#pragma once
 #include "../util/String.h"
 #include "./Date.h"
 #include <fstream>
@@ -11,8 +12,6 @@ enum class Status
     OVERDUE
 };
 
-static unsigned id_count = 1;
-
 class Task
 {
   private:
@@ -23,8 +22,10 @@ class Task
     MyString description;
 
   public:
-    Task(){}
-    Task(const MyString &name, const MyString &due_date, const MyString &description);
+    Task()
+    {
+    }
+    Task(const MyString &name, const MyString &due_date, const MyString &description, const unsigned id);
     void list_task() const;
 
     const unsigned getID() const;

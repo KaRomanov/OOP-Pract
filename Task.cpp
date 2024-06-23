@@ -51,9 +51,9 @@ std::istream &operator>>(std::istream &is, Status &status)
 
 // fix task_id
 
-Task::Task(const MyString &name, const MyString &due_date, const MyString &description)
+Task::Task(const MyString &name, const MyString &due_date, const MyString &description, const unsigned id)
 {
-    task_id = id_count++;
+    task_id = id;
 
     this->name = name;
     this->due_date = Date(due_date);
@@ -105,13 +105,45 @@ void Task::setStatus(const Status newStatus)
 
 // fix writing and reading
 
-// void Task::writeToFile(std::ofstream &out) const {
-//   out << task_id << name << task_status << description << due_date;
-// }
+void Task::writeToFile(std::ofstream &out) const
+{
+    out.write((const char *)&task_id, sizeof(task_id));
+    unsigned nameSize = name.length();
+    out.write((const char *)&nameSize, sizeof(nameSize));
+    out.write(name.c_str(), nameSize + 1);
+    unsigned descSize = description.length();
+    out.write((const char *)&descSize, sizeof(descSize));
+    out.write(description.c_str(), descSize + 1);
+    long unixTime = due_date.getUnixTime();
+    out.write((const char *)&unixTime, sizeof(unixTime));
+    int status = static_cast<int>(task_status);
+    out.write((const char *)&status, sizeof(status));
+}
 
-// void Task::readFromFile(std::ifstream &in) {
-//   in >> task_id >> name >> task_status >> description >> due_date;
-// }
+void Task::readFromFile(std::ifstream &in)
+{
+    in.read((char *)&task_id, sizeof(task_id));
+    unsigned nameSize;
+    in.read((char *)&nameSize, sizeof(nameSize));
+    nameSize++;
+    char *tempName = new char[nameSize];
+    in.read(tempName, nameSize);
+    name = MyString(tempName);
+    free(tempName);
+
+    unsigned descSize;
+    in.read((char *)&descSize, sizeof(descSize));
+    descSize++;
+    char *newDesc = new char[descSize];
+    in.read(newDesc, descSize);
+    description = MyString(newDesc);
+    free(newDesc);
+
+    long unixTime;
+    in.read((char *)&unixTime, sizeof(unixTime));
+    due_date = Date(unixTime);
+    in.read((char *)&task_status, sizeof(task_status));
+}
 
 void Task::setDesc(const MyString &newDesc)
 {
